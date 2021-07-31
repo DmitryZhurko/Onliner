@@ -1,0 +1,80 @@
+{% extends 'core/base.html' %}
+
+{% load static %}
+{% block content %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+     <link href="/examples/vendors/bootstrap-4.3/css/bootstrap.min.css" rel="stylesheet">
+
+ <h1  class="bg-secondary text-white" align="left"><a style=" margin-left: 10px;" class="bg-secondary text-white" align="left" href="{% url 'houses_and_apartments:flat_list' %}">z09liner<a/></h1><br>
+<h2>Заполните форму</h2>
+<form   method="POST" enctype="multipart/form-data" >
+  {% csrf_token %}
+<div style="margin: 30px">
+    <div>
+    {{ fullrentform.cost.label }}
+    {{ fullrentform.cost }}
+    {{ fullrentform.cost_dollar.label }}
+    {{ fullrentform.cost_dollar }}
+    {{ fullrentform.floor.label }}
+    {{ fullrentform.floor }}
+    {{ fullrentform.number_of_rooms.label }}
+    {{ fullrentform.number_of_rooms }}
+    </div>
+    <div>
+    {{ fullrentform.description.label }}
+    {{ fullrentform.description }}
+    {{ fullrentform.telephone.label }}
+    {{ fullrentform.telephone }}
+    {{ fullrentform.address.label }}
+    {{ fullrentform.address }}
+    </div>
+    <div>
+    {{ fullrentform.tv.label }}
+    {{ fullrentform.tv }}
+    {{ fullrentform.furniture.label }}
+    {{ fullrentform.furniture }}
+    {{ fullrentform.plate.label }}
+    {{ fullrentform.plate }}
+    {{ fullrentform.refrigerator.label }}
+    {{ fullrentform.refrigerator }}
+    {{ fullrentform.internet.label }}
+    {{ fullrentform.internet }}
+    {{ fullrentform.conditioning.label }}
+    {{ fullrentform.conditioning }}
+    {{ fullrentform.washer.label }}
+    {{ fullrentform.washer }}
+    {{ fullrentform.flat_or_apartment.label }}
+    {{ fullrentform.flat_or_apartment }}
+    </div>
+</div>
+
+
+
+
+
+<!--    cost', 'cost_dollar', 'floor', 'number_of_rooms',-->
+<!--                  'description', 'telephone', 'address', 'tv', 'furniture', 'plate', 'refrigerator', 'internet', 'conditioning', 'washer', 'flat_or_apartment'-->
+
+
+
+
+
+
+
+<!--{% for i in fullrentform %}-->
+<!--  {{ i.label }}-->
+<!--  {{ i }}-->
+<!--  {% endfor %}-->
+
+
+
+
+<button type="submit" class="btn btn-warning">Добавить объявление</button><br>
+    <span>{{error}}</span>
+</form>
+<script src="/examples/vendors/jquery/jquery-3.4.1.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="/examples/vendors/bootstrap-4.3/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+{% endblock content %}

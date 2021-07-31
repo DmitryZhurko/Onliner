@@ -1,0 +1,44 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+<h2>Курсы валют на {{ date_html }}</h2><br>
+
+<table class="table">
+  <thead class="table-active">
+    <tr>
+      <th>Валюта</th>
+      <th>Покупка</th>
+      <th>Продажа</th>
+      <th>НБРБ</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Доллар США</th>
+      <td>{{ dollar_pok }}</td>
+      <td>{{ dollar_prod }}</td>
+      <td>{{ dollar_nb }}</td>
+    </tr>
+    <tr>
+      <th>Евро</th>
+      <td>{{ euro_pok }}</td>
+      <td>{{ euro_prod }}</td>
+      <td>{{ euro_nb }}</td>
+    </tr>
+    <tr>
+     <th>100 Российских рублей</th>
+     <td>{{ rosrubl_pok }}</td>
+     <td>{{ rosrubl_prod }}</td>
+     <td>{{ rosrubl_nb }}</td>
+    </tr>
+    <tr>
+    <th></th>
+    <td></td>
+    <td></td>
+    <td></td>
+    </tr>
+  </tbody>
+</table>
+
+{% endblock content %}

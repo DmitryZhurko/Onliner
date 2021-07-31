@@ -1,0 +1,97 @@
+{% extends 'core/base.html' %}
+
+{% load static %}
+{% block content %}
+
+
+ <h1  class="bg-secondary text-white" align="left"><a style=" margin-left: 10px;" class="bg-secondary text-white" align="left" href="{% url 'houses_and_apartments:flat_list' %}">z09liner<a/></h1>
+
+<div class="row row-cols-3 row-cols-md-3 g-3">
+    <div class="form-group text-right">
+<button type="button" class="btn btn-warning"><a href="{% url 'houses_and_apartments:rent_list' %}?param=zero">Аренда</a></button>
+<button type="button" class="btn btn-warning"><a href="{% url 'houses_and_apartments:flat_list' %}?param=zero">Продажа</a></button>
+<button type="button" class="btn btn-warning"><a href="{% url 'houses_and_apartments:place_a_lease' %}">Подать объявление</a></button>
+         {% if user.is_authenticated %}
+<button type="button" class="btn btn-warning"><a href="{% url 'houses_and_apartments:my_announcements_rent' %}">Мои объявления</a></button>
+        {% endif %}
+</div>
+</div>
+
+<div class="btn-group" style="margin-top: -100px; margin-left: 5px;">
+  <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+    Выбрать
+  </button>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item text-dark" href="{% url 'houses_and_apartments:expensive_rent' %}">Сначала дорогие</a></li>
+    <li><a class="dropdown-item text-dark" href="{% url 'houses_and_apartments:cheap_rent' %}">Сначала дешевые</a></li>
+    <li><a class="dropdown-item text-dark"  href="{% url 'houses_and_apartments:by_date_rent' %}">Сначала новые</a></li>
+      <li><a class="dropdown-item text-dark" href="{% url 'houses_and_apartments:by_apartment_rent' %}?param=Дом">Выбрать дома</a></li>
+    <li><a class="dropdown-item text-dark" href="{% url 'houses_and_apartments:by_flat_rent' %}?param=Квартира">Выбрать квартиры</a></li>
+    <li><hr class="dropdown-divider"></li>
+  </ul>
+</div>
+
+<br>
+<br>
+<br>
+
+
+<div style="margin-top: -60px; margin-left: 5px;">
+    <len class="p-3 mb-2 bg-secondary text-white" >Всего объявлений: {{count}}</len> <len class="p-3 mb-2 bg-warning text-dark">Курс доллара: {{dollar}}</len>
+{% if var == 'Квартира' or var == 'Дом' %}
+<a href="{% url 'houses_and_apartments:sorting_by_room_rent' %}?param=1" class="p-3 mb-2 bg-secondary text-white">1-комнатные</a>
+<a href="{% url 'houses_and_apartments:sorting_by_room_rent' %}?param=2" class="p-3 mb-2 bg-secondary text-white">2-комнатные</a>
+<a href="{% url 'houses_and_apartments:sorting_by_room_rent' %}?param=3" class="p-3 mb-2 bg-secondary text-white">3-комнатные</a>
+<a href="{% url 'houses_and_apartments:sorting_by_room_rent' %}?param=4" class="p-3 mb-2 bg-secondary text-white">4+-комнатные</a>
+{% endif %}
+</div>
+<br>
+
+
+
+<div>
+<div class="row row-cols-4 row-cols-md-5 g-4">
+    {% for i in all_flat %}
+<div class="card-group">
+  <div class="card">
+
+     <a href="{% url 'houses_and_apartments:rent_detail' detail_pk=i.pk %}"><img src="{{i.photo_rent.first.image_rent.url}}" class="card-img-top" class="card-img-top" alt=".." width="200" height="300"></a>
+
+    <div class="card-body">
+      <p class="card-text"> Цена: {{i.cost}} рублей | адрес: {{i.address}} </p>
+        Цена: {{i.cost_dollar}} $
+    </div>
+  </div>
+</div>
+    {% endfor %}
+    </div>
+    </div>
+
+<!--Пагинация-->
+<!-- проверка, чтобы если одна страница, то не выводила пагинацию-->
+{% if all_flat.has_other_pages %}
+<div class="text-center">
+<!--выводит < если есть предыдущая страница-->
+    {% if all_flat.has_previous %}
+    <a href="?page={{ all_flat.previous_page_number }}">&lt;</a>
+    {% endif %}
+<!--    вывод цифр пагинатора-->
+{% for p in all_flat.paginator.page_range %}
+<!--     если текущая страница равна объекту из цикла то отображается подругому-->
+    {% if p == all_flat.number %}
+    <em class="fs-2"><a href="?page={{ p }}"   class="text-secondary"> {{ p }} </a></em>
+<!--    проверка для того, чтобы выводились 2 цифры страниц слева и справа от текущей-->
+    {% elif p >= all_flat.number|add:-2 and p <= all_flat.number|add:2 %}
+<em class="fs-2"><a href="?page={{ p }}"   class=" text-dark" > {{ p }} </a></em>
+    {% endif %}
+{% endfor %}
+<!--    выводит > если есть следующая страница-->
+    {% if all_flat.has_next %}
+    <a href="?page={{ all_flat.next_page_number }}">&gt;</a>
+    {% endif %}
+</div>
+{% endif %}
+<!--Пагинация-->
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d75252.6725687754!2d27.523329546847982!3d53.88472079785735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46dbcfd35b1e6ad3%3A0xb61b853ddb570d9!2z0JzQuNC90YHQug!5e0!3m2!1sru!2sby!4v1625153703989!5m2!1sru!2sby" width="2350" height="480" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+
+{% endblock content %}

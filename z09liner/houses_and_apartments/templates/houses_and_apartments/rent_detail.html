@@ -1,0 +1,109 @@
+{% extends 'core/base.html' %}
+
+{% load static %}
+{% block content %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+     <link href="/examples/vendors/bootstrap-4.3/css/bootstrap.min.css" rel="stylesheet">
+
+<div align="center">
+<button  type="button" class="btn btn-warning"><a href="{% url 'houses_and_apartments:flat_list' %}"><h5>Продажа</h5></a></button>
+<button type="button" class="btn btn-warning"><a href="{% url 'houses_and_apartments:rent_list' %}"><h5>Аренда</h5></a></button>
+{% if rent.user == request.user %}
+  <button type="button" class="btn btn-warning"><a href="{% url 'houses_and_apartments:rent_edit' rent_edit_pk=rent.pk %}"><h5>Редактировать</h5></a></button>
+  <button type="button" class="btn btn-warning"><a href="{% url 'houses_and_apartments:rent_delete' rent_delete_pk=rent.pk %}"><h5>Удалить объявление</h5></a></button>
+{% endif %}
+</div>
+<br>
+<br>
+<div align="center" id="carouselExampleControls"  class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+
+    <div class="carousel-item active">
+      <img src="{{ photo_rent.first.image_rent.url }}" class="d-block w-50"  width="200" height="600" alt="...">
+    </div>
+      {% for i in photo_rent %}
+    <div class="carousel-item" >
+      <img src="{{ i.image_rent.url }}" class="d-block w-50"  width="200" height="600" alt="...">
+    </div>
+    {% endfor %}
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"  data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Предыдущий</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"  data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Следующий</span>
+  </button>
+</div>
+<br>
+<p class="p-3 mb-2 bg-secondary text-white">Цена: {{rent.cost}} рублей </p>
+<p class="p-3 mb-2 bg-warning text-dark">Цена: {{rent.cost_dollar}} $</p>
+<p>Адрес: {{rent.address}}</p>
+<p>Тип: {{rent.flat_or_apartment}}</p>
+<p>Количество комнат: {{rent.number_of_rooms}}</p>
+<p>телефон: {{rent.telephone}}</p>
+<p>Арендодатель: {{rent.user.first_name}} {{rent.user.last_name}}</p>
+<p>Дата: {{rent.date}}</p>
+
+{% if rent.tv %}
+<len class="p-3 mb-2 bg-success text-white">Телевизор: Да</len>
+{% else %}
+<strike class="p-3 mb-2 bg-danger text-white">Телевизор: Нет</strike>
+{% endif %}
+
+{% if rent.furniture %}
+<len class="p-3 mb-2 bg-success text-white">Мебель: Да</len>
+{% else %}
+<strike class="p-3 mb-2 bg-danger text-white">Мебель: Нет</strike>
+{% endif %}
+<br>
+<br>
+<br>
+{% if rent.plate %}
+<len class="p-3 mb-2 bg-success text-white">Плита: Да</len>
+{% else %}
+<strike class="p-3 mb-2 bg-danger text-white">Плита: Нет</strike>
+{% endif %}
+
+{% if rent.refrigerator %}
+<len class="p-3 mb-2 bg-success text-white">Холодильник: Да</len>
+{% else %}
+<strike class="p-3 mb-2 bg-danger text-white">Холодильник: Нет</strike>
+{% endif %}
+<br>
+<br>
+<br>
+
+{% if rent.internet %}
+<len class="p-3 mb-2 bg-success text-white">Интеренет: Да</len>
+{% else %}
+<strike class="p-3 mb-2 bg-danger text-white">Интеренет: Нет</strike>
+{% endif %}
+
+{% if rent.conditioning %}
+<len class="p-3 mb-2 bg-success text-white">Кондиционер: Да</len>
+{% else %}
+<strike class="p-3 mb-2 bg-danger text-white">Кондиционер: Нет</strike>
+{% endif %}
+<br>
+<br>
+<br>
+
+{% if rent.washer %}
+<len class="p-3 mb-2 bg-success text-white">Стиральная машина: Да</len>
+{% else %}
+<strike class="p-3 mb-2 bg-danger text-white">Стиральная машина: Нет</strike>
+{% endif %}
+<br>
+<br>
+<p>Описание: {{rent.description}}</p>
+
+<p align="center" ><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d75252.6725687754!2d27.523329546847982!3d53.88472079785735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46dbcfd35b1e6ad3%3A0xb61b853ddb570d9!2z0JzQuNC90YHQug!5e0!3m2!1sru!2sby!4v1625153703989!5m2!1sru!2sby" width="2350" height="480" style="border:0;" allowfullscreen="" loading="lazy"></iframe></p>
+<script src="/examples/vendors/jquery/jquery-3.4.1.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="/examples/vendors/bootstrap-4.3/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+{% endblock content %}l>
+

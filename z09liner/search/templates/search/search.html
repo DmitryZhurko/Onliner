@@ -1,0 +1,43 @@
+{% extends 'core/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div style="margin-left: 20px;">
+    {% if zapros %}
+        <h3 style="text-align: left">Вы искали "{{ zapros }}"</h3><br>
+        {% for items in service_search %}
+            <h5><a href="{% url 'service:service_detail' items.pk %}" style="text-decoration: none; color: #0d6efd;">
+            {{ items.title }}</a></h5>
+            {{ items.description }}<br>
+        {% endfor %}<br>
+        {% for items in forum_search %}
+            <h5><a href="{% url 'forum:topic_detail' items.pk %}" style="text-decoration: none; color: #0d6efd;">
+            {{ items.title }}</a></h5><br>
+        {% endfor %}<br>
+{#            <!--    Paginator-->#}
+{##}
+{#        <div class="pagination" style="margin-left: 300px; margin-top: 30px;">#}
+{#            <span class="step-links">#}
+{#                {% if page_render.has_previous %}#}
+{#                    <a href="?page=1">&laquo; Первая</a>#}
+{#                    <a href="?page={{ page_render.previous_page_number }}">Назад</a>#}
+{#                {% endif %}#}
+{##}
+{#                <span class="current">#}
+{#                    Страница: {{ page_render.number }} из {{ page_render.paginator.num_pages }}.#}
+{#                </span>#}
+{##}
+{#                {% if page_render.has_next %}#}
+{#                    <a href="?page={{ page_render.next_page_number }}">Дальше</a>#}
+{#                    <a href="?page={{ page_render.paginator.num_pages }}">Последняя &raquo;</a>#}
+{#                {% endif %}#}
+{#            </span>#}
+{#        </div>#}
+    {% else %}
+        <h3 style="text-align: left">Извините, по вашему запросу ничего не найдено</h3>
+    {% endif %}
+</div>
+
+{% endblock content %}

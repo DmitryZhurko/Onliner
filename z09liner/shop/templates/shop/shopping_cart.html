@@ -1,0 +1,66 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="floatleft">
+  <h3>Категории</h3>
+    <ul>
+      {% for category in categories %}
+        <li><a href="{% url 'shop:category' category_id=category.pk %}">{{ category.name }}</a></li>
+      {% endfor %}
+    </ul>
+  <br>
+  <div> <a href="{% url 'shop:index' %}">На главную </a></div>
+</div>
+
+<div class="floatright">
+
+<!--	<div id="templatemo_header">-->
+<!--        <div id="header_right">-->
+<!--	        <a href="#">My Account</a> | <a href="#">My Wishlist</a> | <a href="#">My Cart</a> | <a href="#">Checkout</a> | <a href="#">Log In</a>-->
+<!--		</div>-->
+<!--        <div class="cleaner"></div>-->
+<!--    </div> &lt;!&ndash; END of templatemo_header &ndash;&gt;-->
+    {% if baskets %}
+        <h1>Ваша корзина ({{ total_quantity }} товаров)</h1>
+        <table width="680px" cellspacing="0" cellpadding="5">
+        <tr bgcolor="#ddd">
+            <th width="220" align="left">Изображение </th>
+            <th width="180" align="left">Описание </th>
+            <th width="100" align="center">Количество </th>
+            <th width="60" align="right">Цена </th>
+            <th width="60" align="right">Итого </th>
+            <th width="90"> </th>
+        </tr>
+        {% for product in baskets %}
+        <tr>
+            <td><a href="{% url 'shop:product_detail' product_id=product.product.pk%}"><img src="/media/{{ product.product.image }}" width="150" height="150" alt="{{ product.product.image }}" /></a></td>
+            <td>{{ product.product }}</td>
+            <td align="center"><input type="text" value="{{ product.quantity }}" style="width: 20px; text-align: right" /> </td>
+            <td align="right">{{ product.product.price }}р.</td>
+            <td align="right">{{ product.sum }}р.</td>
+            <td align="center"> <a href="{% url 'shop:basket_delete' product_id=product.id %}">Удалить</a> </td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="3" align="right"  height="30px"></td>
+            <td align="right" style="background:#ddd; font-weight:bold"> Итого </td>
+            <td align="right" style="background:#ddd; font-weight:bold">{{ total_sum }}р.</td>
+            <td style="background:#ddd; font-weight:bold"> </td>
+        </tr>
+        </table>
+        <div style="float:left; width: 300px; margin-top: 20px;">
+
+        <p><a href="{% url 'shop:checkout' %}">Перейти к оформлению заказа</a></p>
+        <p><a href="{% url 'shop:index' %}">Продолжить покупки</a></p>
+
+        </div>
+            <div class="cleaner"></div>
+    {% else %}
+        <h1>Ваша корзина пуста</h1>
+        <p><a href="{% url 'shop:index' %}">Перейти к покупкам</a></p>
+        <div class="cleaner"></div>
+    {% endif %}
+
+{% endblock content %}

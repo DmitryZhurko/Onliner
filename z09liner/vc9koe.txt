@@ -1,0 +1,140 @@
+{% extends 'core/base.html' %}
+
+
+{% load static %}
+
+
+{% block content %}
+<head>
+    <title>Sidebar 08</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'service/css/style.css' %}">
+</head>
+<body>
+
+
+
+<div class="container d-md-flex align-items-stretch">
+    <!-- Page Content  -->
+    <div id="content" class="p-4 p-md-5 pt-5">
+        <h2 class="mb-4">text</h2>
+    </div>
+
+    <nav id="sidebar">
+        <div class="p-4 pt-5">
+            <h5>Categories</h5>
+            <ul class="list-unstyled components mb-5">
+                <li>
+                    <a href="#pageSubmenu1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Mens Shoes</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu1">
+                        <li><a href="#"><span class="fa fa-chevron-right mr-2"></span> Casual</a></li>
+                        <li><a href="#"><span class="fa fa-chevron-right mr-2"></span> Football</a></li>
+                        <li><a href="#"><span class="fa fa-chevron-right mr-2"></span> Jordan</a></li>
+                        <li><a href="#"><span class="fa fa-chevron-right mr-2"></span> Lifestyle</a></li>
+                        <li><a href="#"><span class="fa fa-chevron-right mr-2"></span> Running</a></li>
+                        <li><a href="#"><span class="fa fa-chevron-right mr-2"></span> Soccer</a></li>
+                        <li><a href="#"><span class="fa fa-chevron-right mr-2"></span> Sports</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#pageSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Mens Shoes</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu2">
+                        <li><a href="#"><span class="fa fa-chevron-right mr-2"></span> Casual</a></li>
+                        <li><a href="#"><span class="fa fa-chevron-right mr-2"></span> Football</a></li>
+                        <li><a href="#"><span class="fa fa-chevron-right mr-2"></span> Jordan</a></li>
+                        <li><a href="#"><span class="fa fa-chevron-right mr-2"></span> Lifestyle</a></li>
+                        <li><a href="#"><span class="fa fa-chevron-right mr-2"></span> Running</a></li>
+                        <li><a href="#"><span class="fa fa-chevron-right mr-2"></span> Soccer</a></li>
+                        <li><a href="#"><span class="fa fa-chevron-right mr-2"></span> Sports</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#pageSubmenu3" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Accessories</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu3">
+                        <li><a href="#"><span class="fa fa-chevron-right mr-2"></span> Nicklace</a></li>
+                        <li><a href="#"><span class="fa fa-chevron-right mr-2"></span> Ring</a></li>
+                        <li><a href="#"><span class="fa fa-chevron-right mr-2"></span> Bag</a></li>
+                        <li><a href="#"><span class="fa fa-chevron-right mr-2"></span> Sacks</a></li>
+                        <li><a href="#"><span class="fa fa-chevron-right mr-2"></span> Lipstick</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#pageSubmenu4" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Clothes</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu4">
+                        <li><a href="#"><span class="fa fa-chevron-right mr-2"></span> Jeans</a></li>
+                        <li><a href="#"><span class="fa fa-chevron-right mr-2"></span> T-shirt</a></li>
+                        <li><a href="#"><span class="fa fa-chevron-right mr-2"></span> Jacket</a></li>
+                        <li><a href="#"><span class="fa fa-chevron-right mr-2"></span> Shoes</a></li>
+                        <li><a href="#"><span class="fa fa-chevron-right mr-2"></span> Sweater</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<script src="{% static 'service/js/jquery.min.js' %}"></script>
+<script src="{% static 'service/js/popper.js' %}"></script>
+<script src="{% static 'service/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'service/js/main.js' %}"></script>
+</body>
+
+{% endblock content %}
+
+
+список категорий
+<div class="flex-shrink-0 p-3 bg-white" style="width: 280px;">
+    <ul class="list-unstyled ps-0">
+        {% recursetree category %}
+        <li class="mb-1">
+            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
+                <a href="{% url 'service:category_list' node.pk %}">{{ node.name }}</a>
+            </button>
+            {% if not node.is_leaf_node %}
+            <div class="collapse" id="dashboard-collapse" style="margin-left: 20px; color: red">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a class="link-dark rounded" >{{ children }}</a></li>
+                </ul>
+            </div>
+            {% endif %}
+        </li>
+        {% endrecursetree %}
+    </ul>
+</div>
+
+
+кнопка дроп
+<div class="btn-group" style="float: right; margin: 30px">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuClickable" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-expanded="false">
+        Статус
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuClickable">
+        <li><a class="dropdown-item" href="#">Активные</a></li>
+        <li><a class="dropdown-item" href="#">Закрытые</a></li>
+    </ul>
+</div>
+
+@login_required
+def my_service(request):
+    # service = Service.objects.filter(user=request.user)
+    #
+    # my_filters = my_filter(request, service)
+    # service = my_filters.qs
+    #
+    # page_obj = paginator(request, service)
+
+    page_obj = view_mixin(request, cate_pk=None, queryset=Service.objects.filter(user=request.user))
+
+    context = {
+        'page_obj': page_obj[1][0],
+        'my_filters': page_obj[1][1]
+    }
+
+    return render(request, 'service/my_service.html', context)
+
+

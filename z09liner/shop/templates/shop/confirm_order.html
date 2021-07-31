@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Заказы</title>
+</head>
+<body>
+<p><a href="{% url 'shop:index' %}"> На главную страницу </a></p>
+<h1> Ваш заказ принят </h1>
+
+
+<h2> История заказов </h2>
+
+
+{% for order in orders %}
+    {% for product in order.products.all %}
+        {{product.orders}}<br>
+    {% endfor %}
+
+    {{order.orders.product}}
+    {{order.total_price}}p.<br>
+    {{order.created_date}}<br>
+    {{order.email}}<br>
+    {{order.tel}}<br>
+
+<br>
+{% endfor %}
+
+
+</body>
+</html>

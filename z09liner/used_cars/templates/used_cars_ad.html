@@ -1,0 +1,469 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <title>Автобарахолка</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+
+    <script>
+        addEventListener("load", function () {
+            setTimeout(hideURLbar, 0);
+        }, false);
+
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+    </script>
+    <!-- Custom Theme files -->
+    <link href="{% static 'core/css/bootstrap.css' %}" type="text/css" rel="stylesheet" media="all">
+    <link href="{% static 'core/css/style.css' %}" type="text/css" rel="stylesheet" media="all">
+    <!-- font-awesome icons -->
+    <link href="{% static 'core/css/fontawesome-all.min.css' %}" rel="stylesheet">
+	<!-- //Custom Theme files -->
+    <!-- online-fonts -->
+    <link href="//fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,500,500i,700,700i" rel="stylesheet">
+    <!-- //online-fonts -->
+</head>
+
+<body>
+    <!-- banner -->
+    <div class="inner-banner">
+        <!-- header -->
+        <header>
+            <!--Иконка-->
+            <nav class="navbar navbar-expand-lg navbar-light bg-gradient-secondary pt-3">
+                <h1>
+                    <a class="navbar-brand text-white" href="{% url 'core:core_base' %}">
+                       <i class="far fa-copyright"></i>
+                    </a>
+                </h1>
+                <button class="navbar-toggler ml-md-auto" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <!--Навигация-->
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-lg-auto text-center">
+                        <!-- Контейнер ли копировать-->
+                        <li class="nav-item  mr-3 mt-lg-0 mt-3">
+                            <a class="nav-link" href="#">Каталог
+                            </a>
+                        </li>
+                        <li class="nav-item  mr-3 mt-lg-0 mt-3">
+                            <a class="nav-link" href="#">Новости
+                            </a>
+                        </li>
+                        <li class="nav-item  mr-3 mt-lg-0 mt-3">
+                            <a class="nav-link" href="{% url 'used_cars_main_list' %}">Автобарахолка
+                            </a>
+                        </li>
+                        <li class="nav-item  mr-3 mt-lg-0 mt-3">
+                            <a class="nav-link" href="#">Дома и квартиры
+                            </a>
+                        </li>
+                        <li class="nav-item  mr-3 mt-lg-0 mt-3">
+                            <a class="nav-link" href="#">Услуги
+                            </a>
+                        </li>
+                        <li class="nav-item  mr-3 mt-lg-0 mt-3">
+                            <a class="nav-link" href="#">Форум
+                            </a>
+                        </li>
+                        <li class="nav-item  mr-3 mt-lg-0 mt-3">
+                            <a class="nav-link" href="#">Барахолка
+                            </a>
+                        </li>
+                        <li class="nav-item  mr-3 mt-lg-0 mt-3">
+                        {% if user.is_authenticated %}
+                            {% csrf_token %}
+                            <a class="nav-link" href="{% url 'users:profile' %}">{{ user.username }}</a></li>
+                        <li class="nav-item  mr-3 mt-lg-0 mt-3">
+                            <a class="nav-link" href="{% url 'users:logout' %}">Logout</a></li>
+                        {% else %}
+                            <div><a class="nav-link" href="{% url 'users:login' %}">Login</a></div>
+                        {% endif %}
+
+
+                    </ul>
+                </div>
+			</nav>
+        </header>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% block content %}
+    <table width="100%" border="0">
+        <tr>
+            <td valign="top" width="20%">
+                <h1><a href="{% url 'used_cars_main_list' %}">Автобарахолка</a></h1>
+                <h1>Категории</h1>
+                    <h3>Состояние</h3>
+                    {% for i in status %}
+                        <a href="{% url 'used_cars_main_list_category' i %}">{{i}}</a><br>
+                    {% endfor %}
+                    <h3>Двигатель</h3>
+                    {% for i in fuel %}
+                        <a href="{% url 'used_cars_main_list_category' i %}">{{i}}</a><br>
+                    {% endfor %}
+                    <h3>Коробка</h3>
+                    {% for i in transmission %}
+                        <a href="{% url 'used_cars_main_list_category' i %}">{{i}}</a><br>
+                    {% endfor %}
+                    <h3>Кузов</h3>
+                    {% for i in body %}
+                        <a href="{% url 'used_cars_main_list_category' i %}">{{i}}</a><br>
+                    {% endfor %}
+            </td>
+
+
+            <td valign="top" width="60%">
+                <h1 align="center">{{car.name_car}}</h1>
+
+                <p align="center"><img src="/media/{{ car.photo1 }}" width="70%" height="50%" alt="..." />
+                <img src="/media/{{ car.photo2 }}" width="34.9%" height="50%" alt="..." />
+                <img src="/media/{{ car.photo3 }}" width="34.9%" height="50%" alt="..." /></p>
+
+                <table border="0" align="center" width="65%" cellpadding="5%">
+                    <tr>
+                        <td align="left">
+                            <h1>Описание</h1><br>
+                            <p>{{car.text}}</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+
+            <td valign="top" width="20%">
+                <h1 align="center">{{car.prise}} р.</h1>
+                <table border="0" align="center" width="50%" cellpadding="5%">
+                    <tr>
+                        <td align="right">
+                            <font color="gray">
+                                Год выпуска
+                            </font>
+                        </td>
+
+                        <td align="left">
+                            {{car.year}}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td align="right">
+                            <font color="gray">
+                                Пробег
+                            </font>
+                        </td>
+
+                        <td align="left">
+                            {{car.mileage}}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td align="right">
+                            <font color="gray">
+                                Кузов
+                            </font>
+                        </td>
+
+                        <td align="left">
+                            {{car.body}}
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td align="right">
+                            <font color="gray">
+                                Цвет
+                            </font>
+                        </td>
+
+                        <td align="left">
+                            {{car.color}}
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td align="right">
+                            <font color="gray">
+                                Двигатель
+                            </font>
+                        </td>
+
+                        <td align="left">
+                            {{car.fuel}}
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td align="right">
+                            <font color="gray">
+                                Мощность
+                            </font>
+                        </td>
+
+                        <td align="left">
+                            {{car.power}}
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td align="right">
+                            <font color="gray">
+                                Коробка
+                            </font>
+                        </td>
+
+                        <td align="left">
+                            {{car.transmission}}
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td align="right">
+                            <font color="gray">
+                                Привод
+                            </font>
+                        </td>
+
+                        <td align="left">
+                            {{car.type_of_drive}}
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td align="right">
+                            <font color="gray">
+                                Состояние
+                            </font>
+                        </td>
+
+                        <td align="left">
+                            {{car.status}}
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+{% endblock content %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<footer class="footer-emp bg-dark py-5">
+		<div class="container">
+			<div class="row footer-top">
+				<div class="col-lg-4 footer-grid pr-5">
+					<h2 class="footer-title border-bottom text-uppercase mb-4 pb-3">О нас</h2>
+					<div class="footer-text">
+
+						<p>Милые</p>
+
+					</div>
+				</div>
+				<div class="col-lg-4 footer-grid my-lg-0 my-4">
+					<h3 class="footer-title border-bottom text-uppercase mb-4 pb-3">Быстрый переход</h3>
+					<ul class="links list-unstyled">
+						<li>
+							<a href="#">Каталог</a>
+						</li>
+						<li class="my-2">
+							<a href="#">Новости</a>
+						</li>
+						<li>
+							<a href="{% url 'used_cars_main_list' %}">Автобарахолка</a>
+						</li>
+						<li class="my-2">
+							<a href="#">Дома и квартиры</a>
+						</li>
+						<li>
+							<a href="#">Услуги</a>
+						</li>
+						<li class="mt-2">
+							<a href="#">Форум</a>
+						</li>
+                        <li class="mt-2">
+							<a href="#">Барахолка</a>
+						</li>
+					</ul>
+
+
+				</div>
+				<div class="col-lg-4 footer-grid">
+					<h3 class="footer-title border-bottom text-uppercase mb-4 pb-3">Контакты</h3>
+					<div class="contact-info">
+						<ul class="list-unstyled">
+							<li>
+								<div class="row">
+									<div class="col-1">
+										<i class="fas fa-map-marker"></i>
+									</div>
+									<div class="col-11">
+										<p>Созданно при поддержке
+											<span>Сашки</span>Какашки</p>
+									</div>
+								</div>
+							</li>
+							<li class="my-2">
+								<div class="row">
+									<div class="col-1">
+										<i class="fas fa-phone"></i>
+									</div>
+									<div class="col-11">
+										<p>8-800-555-35-35</p>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="row">
+									<div class="col-1">
+										<i class="fas fa-envelope"></i>
+									</div>
+									<div class="col-11">
+										<a href="mailto:info@example.com">mail@example.com</a>
+									</div>
+								</div>
+							</li>
+						</ul>
+
+					</div>
+					<ul class="footer-social mt-md-4 mt-3">
+						<li class="mx-2">
+							<a href="#">
+								<span class="fab fa-facebook-f"></span>
+							</a>
+						</li>
+						<li class="mx-2">
+							<a href="#">
+								<span class="fab fa-twitter"></span>
+							</a>
+						</li>
+						<li class="mx-2">
+							<a href="#">
+								<span class="fab fa-google-plus-g"></span>
+							</a>
+						</li>
+						<li class="mx-2">
+							<a href="#">
+								<span class="fab fa-linkedin-in"></span>
+							</a>
+						</li>
+						<li class="mx-2">
+							<a href="#">
+								<span class="fas fa-rss"></span>
+							</a>
+						</li>
+						<li class="mx-2">
+							<a href="#">
+								<span class="fab fa-vk"></span>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</footer>
+    </p>
+	<!-- //footer -->
+
+
+
+
+                                        <!--    НЕ ТРОГАТЬ-->
+
+
+
+<!-- js -->
+    <script src="{% static 'core/js/jquery-2.2.3.min.js' %}"></script>
+<!-- //js -->
+ <!-- start-smooth-scrolling -->
+    <script src="{% static 'core/js/move-top.js' %}"></script>
+    <script src="{% static 'core/js/easing.js' %}"></script>
+    <script>
+        jQuery(document).ready(function ($) {
+            $(".scroll").click(function (event) {
+                event.preventDefault();
+
+                $('html,body').animate({
+                    scrollTop: $(this.hash).offset().top
+                }, 1000);
+            });
+        });
+    </script>
+    <!-- //end-smooth-scrolling -->
+    <!-- smooth-scrolling-of-move-up -->
+    <script>
+        $(document).ready(function () {
+            /*
+            var defaults = {
+                containerID: 'toTop', // fading element id
+                containerHoverID: 'toTopHover', // fading element hover id
+                scrollSpeed: 1200,
+                easingType: 'linear'
+            };
+            */
+
+            $().UItoTop({
+                easingType: 'easeOutQuart'
+            });
+
+        });
+    </script>
+    <script src="{% static 'core/js/SmoothScroll.min.js' %}"></script>
+
+    <script src="{% static 'core/js/bootstrap.js' %}"></script>
+</body>
+
+</html>

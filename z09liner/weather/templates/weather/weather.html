@@ -1,0 +1,20 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div style="margin-left: 30px;">
+    <form action="" method="POST">
+    {% csrf_token %}
+    {{ city_form.city }}
+    <input type="submit" value="Поиск">
+    </form><br>
+    <h1>{{ city }}</h1>
+    <h3>Сейчас</h3><br>
+    <div>{{ description }}</div>
+    <div>температура: {{ temp }} °С</div>
+    <div>ветер: {{ wind }} м/с</div>
+    <div>давление: {{ pressure }} мм рт. ст.</div>
+    <div>влажность: {{ humidity }} %</div><br><br>
+    <!--{{ data }}<br><br><br>-->
+    <!--{{ data_forecast }}-->
+</div>
+{% endblock content %}

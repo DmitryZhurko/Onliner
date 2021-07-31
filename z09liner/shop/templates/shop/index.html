@@ -1,0 +1,79 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+
+
+
+{% block content %}
+<div class="floatleft">
+  <h3>Категории</h3>
+    <ul>
+      {% for category in categories %}
+        <li><a href="{% url 'shop:category' category_id=category.pk %}">{{ category.name }}</a></li>
+      {% endfor %}
+    </ul>
+  <br>
+  <div> <a href="{% url 'shop:index' %}">На главную </a></div>
+</div>
+
+<div class="floatright">
+    <div id="top_shopping_cart">
+      Ваша козина: <strong> {{ total_quantity }} товаров </strong> ( <a href="{% url 'shop:shopping_cart' %}">Показать корзину</a> )
+    </div>
+
+  {% for product in page_obj %}
+  <div class="product_box">
+
+    <a href="{% url 'shop:product_detail' product_id=product.pk%}"><img src="/media/{{ product.image }}" width="150" height="150" alt="{{ product.image }}" /></a>
+    <h3>{{ product.name }}</h3>
+    <p class="product_price">{{ product.price }}р.</p>
+    <a href="{% url 'shop:basket_add' product_id=product.pk%}" class="add_to_card">Добавить в корзину</a>
+    <a href="{% url 'shop:product_detail' product_id=product.pk%}" class="detail">Подробнее</a>
+
+  </div>
+  {% endfor %}
+
+<div class="pagination" style="margin-left: 250px; margin-top: 30px;">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; Первая</a>
+                <a href="?page={{ page_obj.previous_page_number }}">Назад</a>
+            {% endif %}
+
+            <span class="current">
+                Страница: {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">Дальше</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">Последняя &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</div>
+
+<!--<ul class="pagination justify-content-center">-->
+<!--    <li class="page-item {% if not page_obj.has_previous %} disabled {% endif %}">-->
+<!--        <a class="page-link"-->
+<!--           href="{% if page_obj.has_previous %} {% url 'shop:page' page_obj.previous_page_number %} {% else %} # {% endif %}"-->
+<!--           tabindex="-1" aria-disabled="true">Предыдущая</a>-->
+<!--    </li>-->
+<!--    {% for page in page_obj.page_range %}-->
+<!--        <li class="page-item">-->
+<!--            <a class="page-link" href="{% url 'shop:page' page %}">-->
+<!--                {{ page }}-->
+<!--            </a>-->
+<!--        </li>-->
+
+<!--    {% endfor %}-->
+
+<!--    <li class="page-item {% if not page_obj.has_next %} disabled {% endif %}">-->
+<!--        <a class="page-link"-->
+<!--           href="{% if page_obj.has_next %} {% url 'shop:page' page_obj.next_page_number %} {% else %} # {% endif %}">-->
+<!--            Следующая</a>-->
+<!--    </li>-->
+<!--</ul>-->
+
+</div>
+
+{% endblock content %}

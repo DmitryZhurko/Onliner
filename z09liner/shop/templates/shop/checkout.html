@@ -1,0 +1,61 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+
+{% block content %}
+<div id="content" class="float_r">
+    <h2>Проверка</h2>
+    <form method="POST">
+        <div>
+            {% csrf_token %}
+            {{ order_form.as_p }}
+            <button type="submit">Подтвердить заказ
+            </button>
+        </div>
+    </form>
+<!--    <div class="content_half float_r checkout">-->
+<!--        Email:-->
+<!--        <input type="text"  style="width:300px;"  /><br />-->
+<!--        Телефон:<input type="text"  style="width:300px;"  />-->
+<!--        <br />-->
+<!--        <span style="font-size:10px">Пожалуйста, укажите Ваш доступный номер телефона. ВАМ ПОЗВОНЯТ, ЧТОБЫ ПРОВЕРИТЬ И ЗАВЕРШИТЬ ЗАКАЗ.</span>-->
+
+<!--    </div>-->
+
+    <div class="cleaner h50"></div>
+    <h3>Ваш заказ:</h3>
+    <table width="680px" cellspacing="0" cellpadding="5">
+        <tr bgcolor="#ddd">
+            <th width="220" align="left">Изображение </th>
+            <th width="180" align="left">Описание </th>
+            <th width="100" align="center">Количество </th>
+            <th width="60" align="right">Цена </th>
+            <th width="60" align="right">Итого </th>
+            <th width="90"> </th>
+        </tr>
+        {% for product in baskets %}
+        <tr>
+            <td><a href="{% url 'shop:product_detail' product_id=product.product.pk%}"><img src="/media/{{ product.product.image }}" width="150" height="150" alt="{{ product.product.image }}" /></a></td>
+            <td>{{ product.product }}</td>
+            <td align="center"><input type="text" value="{{ product.quantity }}" style="width: 20px; text-align: right" /> </td>
+            <td align="right">{{ product.product.price }}р.</td>
+            <td align="right">{{ product.sum }}р.</td>
+            <td align="center"> <a href="{% url 'shop:basket_delete' product_id=product.id %}">Удалить</a> </td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="3" align="right"  height="30px"></td>
+            <td align="right" style="background:#ddd; font-weight:bold"> Итого </td>
+            <td align="right" style="background:#ddd; font-weight:bold">{{ total_sum }}р.</td>
+            <td style="background:#ddd; font-weight:bold"> </td>
+        </tr>
+        </table>
+
+
+
+</div>
+<div class="cleaner"></div>
+
+
+
+{% endblock content %}

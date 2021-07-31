@@ -1,0 +1,38 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+<h4>СТАТИСТИКА РАСПРОСТРАНЕНИЯ COVID-19 (ОФИЦИАЛЬНЫЕ ДАННЫЕ МИНЗДРАВА РБ)</h4><br>
+
+<table class="table">
+  <thead class="table-active">
+    <tr>
+      <th></th>
+      <th>Всего</th>
+      <th>На {{ date }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>ПРОВЕДЕНО ТЕСТОВ</th>
+      <td>{{ test_performed_all }}</td>
+      <td>{{ test_performed_today }}</td>
+    </tr>
+    <tr>
+      <th>ЗАРЕГИСТРИРОВАНЫ</th>
+      <td>{{ registered_all }}</td>
+      <td>{{ registered_today }}</td>
+    </tr>
+    <tr>
+     <th>ВЫЗДОРОВЕЛИ И ВЫПИСАНЫ</th>
+     <td>{{ discharged_all }}</td>
+     <td>{{ discharged_today }}</td>
+    </tr>
+    <tr>
+      <th>УМЕРЛИ</th>
+      <td>{{ died_all }}</td>
+      <td>{{ died_today }}</td>
+    </tr>
+  </tbody>
+</table>
+{% endblock content %}

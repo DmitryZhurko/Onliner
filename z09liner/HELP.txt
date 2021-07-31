@@ -1,0 +1,38 @@
+Наследуем страницу:
+
+{% extends 'core/base.html' %}
+
+{% load static %}
+{% block content %}
+{% endblock content %}
+
+venv\Scripts\activate
+
+Старт нового приложения:
+python manage.py startapp 'name'
+system/settings -> + 'name'
+urls -> + path('', include('name.urls'))
+New/Python file -> urls
+name/urls -> + app_name = 'name'
+пример {% url 'name:name' %}
+
+
+!!!Юзер, авторизация!!!
+В своих моделях делаем импорт и прописываем так
+from users.models import User
+
+class Post(models.Model):
+     author = models.ForeignKey(
+        User, on_delete=models.CASCADE,
+        blank=True, null=True
+    )
+
+во views, где нужна авторизация используем декоратор
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def published_post(request, post_pk):
+    post = Post.objects.get(pk=post_pk)
+    post.published = True
+    post.save()
+    return render(request, 'blog/post_detail.html', {'post': post})
